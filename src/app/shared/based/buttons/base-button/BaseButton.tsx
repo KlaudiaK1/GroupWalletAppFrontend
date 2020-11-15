@@ -7,6 +7,7 @@ interface Props {
   bg?: string;
   color?: string;
   children: string;
+  onPress(): void;
 }
 const StyledRipple = styled(Ripple)<{bg?: string}>`
   background-color: ${({bg}) => bg || theme.colors.white};
@@ -23,9 +24,9 @@ const StyledText = styled.Text<{color?: string}>`
   font-size: 16px;
 `;
 
-const BaseButton = ({bg, color, children}: Props) => {
+const BaseButton = ({bg, color, children, onPress}: Props) => {
   return (
-    <StyledRipple rippleContainerBorderRadius={20} bg={bg}>
+    <StyledRipple rippleContainerBorderRadius={20} bg={bg} onPress={onPress}>
       <StyledText color={color}>{children}</StyledText>
     </StyledRipple>
   );

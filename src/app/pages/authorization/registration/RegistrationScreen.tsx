@@ -1,10 +1,9 @@
 import React from 'react';
+import WavyShape from '../../../shared/shapes/wavy-shape/WavyShape';
 import BaseInput from '../../../shared/based/inputs/base-input/BaseInput';
 import BaseButton from '../../../shared/based/buttons/base-button/BaseButton';
 import {theme} from '@styles/theme';
 import styled from 'styled-components/native';
-import WavyShape from '../../../shared/shapes/wavy-shape/WavyShape';
-import Ripple from 'react-native-material-ripple';
 import {useNavigation} from '@react-navigation/native';
 import {Platform} from 'react-native';
 
@@ -28,14 +27,8 @@ const StyledImage = styled.Image`
   align-self: center;
   margin-top: 32px;
 `;
-const StyledText = styled.Text`
-  color: ${theme.colors.primary};
-  font-size: 13px;
-  text-align: center;
-  padding: 8px;
-`;
 
-const LoginScreen = () => {
+const RegistrationScreen = () => {
   const navigation = useNavigation();
   return (
     <StyledKeyboardAvoidingView
@@ -43,7 +36,13 @@ const LoginScreen = () => {
       <WavyShape />
       <StyledImage source={require('@images/logo_dark.png')} />
       <StyledInputContainer>
+        <BaseInput placeholder="Full name" iconType="Name" />
+      </StyledInputContainer>
+      <StyledInputContainer>
         <BaseInput placeholder="Username" iconType="User" />
+      </StyledInputContainer>
+      <StyledInputContainer>
+        <BaseInput placeholder="Email" iconType="At" />
       </StyledInputContainer>
       <StyledInputContainer>
         <BaseInput placeholder="Password" isSecure={true} iconType="Padlock" />
@@ -52,23 +51,12 @@ const LoginScreen = () => {
         <BaseButton
           bg={theme.colors.secondary}
           color={theme.colors.white}
-          onPress={() => navigation.navigate('Registration')}>
-          Log in
+          onPress={() => navigation.goBack()}>
+          Create Account
         </BaseButton>
       </StyledButtonContainer>
-      <StyledButtonContainer>
-        <BaseButton
-          bg={theme.colors.white}
-          color={theme.colors.secondary}
-          onPress={() => navigation.navigate('Registration')}>
-          Sign up
-        </BaseButton>
-      </StyledButtonContainer>
-      <Ripple>
-        <StyledText>Forgot Password?</StyledText>
-      </Ripple>
     </StyledKeyboardAvoidingView>
   );
 };
 
-export default LoginScreen;
+export default RegistrationScreen;
