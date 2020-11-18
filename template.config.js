@@ -1,4 +1,4 @@
 module.exports = {
-  placeholderName: 'shareExpenses',
+  placeholderName: 'groupWallet',
   templateDir: './template',
-}
+};
