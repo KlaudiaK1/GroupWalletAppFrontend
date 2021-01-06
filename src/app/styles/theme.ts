@@ -2,6 +2,7 @@ export const theme = {
   colors: {
     primary: '#202f46',
     secondary: '#3cbab1',
+    darkPink: '#e7305b',
     darkBlue: '#1a2752',
     white: '#ffffff',
     lightPink: '#fff1ee',
@@ -17,6 +18,7 @@ export const theme = {
     color3: '#2a4574',
     color4: '#272c64',
     color5: '#2e5e84',
+    gray: '#999999',
   },
   fonts: ['sans-serif', 'Roboto'],
   fontSizes: {

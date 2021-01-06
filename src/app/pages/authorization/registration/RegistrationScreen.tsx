@@ -5,12 +5,8 @@ import BaseButton from '../../../shared/based/buttons/base-button/BaseButton';
 import {theme} from '@styles/theme';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
-import {Platform} from 'react-native';
+import {KeyboardAvoidingView, Platform} from 'react-native';
 
-const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
-  flex: 1;
-  background-color: ${theme.colors.white};
-`;
 const StyledInputContainer = styled.View`
   align-items: center;
   align-items: center;
@@ -31,13 +27,10 @@ const StyledImage = styled.Image`
 const RegistrationScreen = () => {
   const navigation = useNavigation();
   return (
-    <StyledKeyboardAvoidingView
+    <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
       <WavyShape />
       <StyledImage source={require('@images/logo_dark.png')} />
-      <StyledInputContainer>
-        <BaseInput placeholder="Full name" iconType="Name" />
-      </StyledInputContainer>
       <StyledInputContainer>
         <BaseInput placeholder="Username" iconType="User" />
       </StyledInputContainer>
@@ -47,6 +40,13 @@ const RegistrationScreen = () => {
       <StyledInputContainer>
         <BaseInput placeholder="Password" isSecure={true} iconType="Padlock" />
       </StyledInputContainer>
+      <StyledInputContainer>
+        <BaseInput
+          placeholder="Repeat password"
+          isSecure={true}
+          iconType="Padlock"
+        />
+      </StyledInputContainer>
       <StyledButtonContainer>
         <BaseButton
           bg={theme.colors.secondary}
@@ -55,7 +55,7 @@ const RegistrationScreen = () => {
           Create Account
         </BaseButton>
       </StyledButtonContainer>
-    </StyledKeyboardAvoidingView>
+    </KeyboardAvoidingView>
   );
 };
 

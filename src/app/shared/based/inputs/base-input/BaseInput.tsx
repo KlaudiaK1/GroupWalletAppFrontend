@@ -5,6 +5,7 @@ import PadlockIcon from '@icons/padlock.svg';
 import UserIcon from '@icons/user.svg';
 import NameIcon from '@icons/name.svg';
 import AtIcon from '@icons/at.svg';
+import GroupIcon from '@icons/group.svg';
 
 const StyledTextInputContainer = styled.View<{isFocused: boolean}>`
   width: 80%;
@@ -23,7 +24,7 @@ const StyledTextInput = styled.TextInput`
   margin-left: 8px;
 `;
 
-type IconTypes = 'User' | 'Padlock' | 'Name' | 'At';
+type IconTypes = 'User' | 'Padlock' | 'Name' | 'At' | 'Group';
 
 interface Props {
   placeholder: string;
@@ -67,12 +68,20 @@ const BaseInput = ({placeholder, isSecure = false, iconType}: Props) => {
       fill={isFocused ? theme.colors.secondary : theme.colors.primary}
     />
   );
+  const groupIcon = (
+    <GroupIcon
+      width={14}
+      height={14}
+      fill={isFocused ? theme.colors.secondary : theme.colors.primary}
+    />
+  );
   return (
     <StyledTextInputContainer isFocused={isFocused}>
       {iconType === 'User' && userIcon}
       {iconType === 'Padlock' && padlockIcon}
       {iconType === 'Name' && nameIcon}
       {iconType === 'At' && atIcon}
+      {iconType === 'Group' && groupIcon}
       <StyledTextInput
         placeholder={placeholder}
         secureTextEntry={isSecure}

@@ -4,14 +4,9 @@ import BaseButton from '../../../shared/based/buttons/base-button/BaseButton';
 import {theme} from '@styles/theme';
 import styled from 'styled-components/native';
 import WavyShape from '../../../shared/shapes/wavy-shape/WavyShape';
-import Ripple from 'react-native-material-ripple';
 import {useNavigation} from '@react-navigation/native';
-import {Platform} from 'react-native';
+import {KeyboardAvoidingView, Platform} from 'react-native';
 
-const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
-  flex: 1;
-  background-color: ${theme.colors.white};
-`;
 const StyledInputContainer = styled.View`
   align-items: center;
   align-items: center;
@@ -28,17 +23,11 @@ const StyledImage = styled.Image`
   align-self: center;
   margin-top: 32px;
 `;
-const StyledText = styled.Text`
-  color: ${theme.colors.primary};
-  font-size: 13px;
-  text-align: center;
-  padding: 8px;
-`;
 
 const LoginScreen = () => {
   const navigation = useNavigation();
   return (
-    <StyledKeyboardAvoidingView
+    <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
       <WavyShape />
       <StyledImage source={require('@images/logo_dark.png')} />
@@ -52,7 +41,7 @@ const LoginScreen = () => {
         <BaseButton
           bg={theme.colors.secondary}
           color={theme.colors.white}
-          onPress={() => navigation.navigate('Registration')}>
+          onPress={() => navigation.navigate('Home')}>
           Log in
         </BaseButton>
       </StyledButtonContainer>
@@ -64,10 +53,7 @@ const LoginScreen = () => {
           Sign up
         </BaseButton>
       </StyledButtonContainer>
-      <Ripple>
-        <StyledText>Forgot Password?</StyledText>
-      </Ripple>
-    </StyledKeyboardAvoidingView>
+    </KeyboardAvoidingView>
   );
 };
 
