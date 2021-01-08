@@ -5,8 +5,11 @@ import BaseButton from '../../../shared/based/buttons/base-button/BaseButton';
 import {theme} from '@styles/theme';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
-import {KeyboardAvoidingView, Platform} from 'react-native';
+import {Platform} from 'react-native';
 
+const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
+  flex: 1;
+`;
 const StyledInputContainer = styled.View`
   align-items: center;
   align-items: center;
@@ -27,7 +30,7 @@ const StyledImage = styled.Image`
 const RegistrationScreen = () => {
   const navigation = useNavigation();
   return (
-    <KeyboardAvoidingView
+    <StyledKeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
       <WavyShape />
       <StyledImage source={require('@images/logo_dark.png')} />
@@ -55,7 +58,7 @@ const RegistrationScreen = () => {
           Create Account
         </BaseButton>
       </StyledButtonContainer>
-    </KeyboardAvoidingView>
+    </StyledKeyboardAvoidingView>
   );
 };
 

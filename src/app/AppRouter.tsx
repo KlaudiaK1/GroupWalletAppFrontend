@@ -6,6 +6,8 @@ import HomeScreen from './pages/home/HomeScreen';
 import {theme} from '@styles/theme';
 import CreateGroupScreen from './pages/create-group/CreateGroupScreen';
 import GroupDetailsScreen from './pages/group-details/GroupDetailsScreen';
+import AddUserScreen from './pages/add-friend/AddUserScreen';
+import AddDebtScreen from './pages/add-debt/AddDebtScreen';
 
 const Stack = createStackNavigator();
 
@@ -61,6 +63,36 @@ const AppRouter = () => {
         component={GroupDetailsScreen}
         options={{
           title: 'Group Details',
+          headerTitleAlign: 'center',
+          headerTintColor: theme.colors.white,
+          headerStyle: {
+            backgroundColor: theme.colors.primary,
+          },
+          headerTitleStyle: {
+            color: theme.colors.white,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="AddUser"
+        component={AddUserScreen}
+        options={{
+          title: 'Add User',
+          headerTitleAlign: 'center',
+          headerTintColor: theme.colors.white,
+          headerStyle: {
+            backgroundColor: theme.colors.primary,
+          },
+          headerTitleStyle: {
+            color: theme.colors.white,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="AddDebt"
+        component={AddDebtScreen}
+        options={{
+          title: 'Add Debt',
           headerTitleAlign: 'center',
           headerTintColor: theme.colors.white,
           headerStyle: {

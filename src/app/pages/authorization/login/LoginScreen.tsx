@@ -5,8 +5,11 @@ import {theme} from '@styles/theme';
 import styled from 'styled-components/native';
 import WavyShape from '../../../shared/shapes/wavy-shape/WavyShape';
 import {useNavigation} from '@react-navigation/native';
-import {KeyboardAvoidingView, Platform} from 'react-native';
+import {Platform} from 'react-native';
 
+const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
+  flex: 1;
+`;
 const StyledInputContainer = styled.View`
   align-items: center;
   align-items: center;
@@ -27,7 +30,7 @@ const StyledImage = styled.Image`
 const LoginScreen = () => {
   const navigation = useNavigation();
   return (
-    <KeyboardAvoidingView
+    <StyledKeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
       <WavyShape />
       <StyledImage source={require('@images/logo_dark.png')} />
@@ -53,7 +56,7 @@ const LoginScreen = () => {
           Sign up
         </BaseButton>
       </StyledButtonContainer>
-    </KeyboardAvoidingView>
+    </StyledKeyboardAvoidingView>
   );
 };
 

@@ -20,25 +20,25 @@ const StyledButtonContainer = styled.View`
   padding: 8px;
 `;
 
-const CreateGroupScreen = () => {
+const AddUserScreen = () => {
   const navigation = useNavigation();
 
   return (
     <StyledKeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <StyledInputContainer>
-        <BaseInput placeholder="Group name" iconType={'Group'} />
+        <BaseInput placeholder="Username" iconType={'User'} />
       </StyledInputContainer>
       <StyledButtonContainer>
         <BaseButton
           bg={theme.colors.secondary}
           color={theme.colors.white}
-          onPress={() => navigation.navigate('Home')}>
-          Create
+          onPress={() => navigation.goBack()}>
+          Add
         </BaseButton>
       </StyledButtonContainer>
     </StyledKeyboardAvoidingView>
   );
 };
 
-export default CreateGroupScreen;
+export default AddUserScreen;

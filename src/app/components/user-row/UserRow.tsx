@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {TouchableOpacity, View} from 'react-native';
+import {Alert, TouchableOpacity, View} from 'react-native';
 import styled from 'styled-components/native';
 import {theme} from '@styles/theme';
 import {Divider} from '../../shared/divider/Divider';
@@ -71,8 +71,7 @@ const UserRow = ({userId, username, owesToUser, owesByUser}: Props) => {
 
   return (
     <View>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('GroupDetails', {id: userId})}>
+      <TouchableOpacity onPress={() => Alert.alert('LOl')}>
         <StyledView>
           <StyledUsernameContainer>
             <StyledUsername>{username}</StyledUsername>

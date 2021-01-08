@@ -8,6 +8,8 @@ import {theme} from '@styles/theme';
 import styled from 'styled-components/native';
 import {Divider} from '../../shared/divider/Divider';
 import BaseButton from '../../shared/based/buttons/base-button/BaseButton';
+import {useNavigation} from '@react-navigation/native';
+import BorderedButton from '../../shared/based/buttons/bordered-button/BorderedButton';
 type RootStackParamList = {
   Group: {id: string};
 };
@@ -21,7 +23,7 @@ interface User {
   owesByUser: number;
 }
 
-interface GroupDetails extends Group {
+export interface GroupDetails extends Group {
   usersList: User[];
 }
 
@@ -52,7 +54,13 @@ const StyledButtonContainer = styled.View`
   align-items: center;
   padding: 16px;
 `;
+const StyledDebtButtonContainer = styled.View`
+  align-items: center;
+  margin-bottom: 16px;
+`;
 const GroupDetailsScreen = ({route}: Props) => {
+  const navigation = useNavigation();
+
   const {id} = route.params;
 
   const groupDetails: GroupDetails = {
@@ -94,6 +102,11 @@ const GroupDetailsScreen = ({route}: Props) => {
         </StyledBalanceText>
         {printBalance()}
       </StyledBalanceContainer>
+      <StyledDebtButtonContainer>
+        <BorderedButton onPress={() => navigation.navigate('AddDebt')}>
+          Add a debt
+        </BorderedButton>
+      </StyledDebtButtonContainer>
       <Divider />
       <ScrollView>
         {groupDetails.usersList.map((user) => (
@@ -108,9 +121,9 @@ const GroupDetailsScreen = ({route}: Props) => {
       </ScrollView>
       <StyledButtonContainer>
         <BaseButton
-          onPress={() => console.log('Pressed')}
+          onPress={() => navigation.navigate('AddUser')}
           color={theme.colors.secondary}>
-          Add a friend
+          Add a user
         </BaseButton>
       </StyledButtonContainer>
     </StyledMainView>
