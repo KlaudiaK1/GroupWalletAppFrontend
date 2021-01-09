@@ -65,11 +65,11 @@ const GroupDetailsScreen = ({route}: Props) => {
 
   const groupDetails: GroupDetails = {
     id: 1,
-    name: 'MoutainTrip',
+    name: 'Moutain Trip',
     usersList: [
-      {userId: 1, username: 'Ola150', owesToUser: 120, owesByUser: 0},
-      {userId: 2, username: 'Patryk8', owesToUser: 0, owesByUser: 70},
-      {userId: 3, username: 'Aga44', owesToUser: 0, owesByUser: 0},
+      {userId: 1, username: 'Ola Kowalska', owesToUser: 120, owesByUser: 0},
+      {userId: 2, username: 'Patryk Nowy', owesToUser: 0, owesByUser: 70},
+      {userId: 3, username: 'Aga Lewandowska', owesToUser: 0, owesByUser: 0},
     ],
   };
 

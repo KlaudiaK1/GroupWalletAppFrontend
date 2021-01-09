@@ -7,9 +7,9 @@ import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 import {GroupDetails} from '../group-details/GroupDetailsScreen';
 import {Divider} from '@shared/divider/Divider';
-import UserRow from '@components/user-row/UserRow';
 import {Controller, useForm} from 'react-hook-form';
 import ErrorMessage from '@shared/based/error-message/ErrorMessage';
+import UsernameRow from '@components/username-row/UsernameRow';
 
 const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
   flex: 1;
@@ -49,11 +49,11 @@ const AddDebtScreen = () => {
 
   const groupDetails: GroupDetails = {
     id: 1,
-    name: 'MoutainTrip',
+    name: 'Moutain Trip',
     usersList: [
-      {userId: 1, username: 'Ola150', owesToUser: 120, owesByUser: 0},
-      {userId: 2, username: 'Patryk8', owesToUser: 0, owesByUser: 70},
-      {userId: 3, username: 'Aga44', owesToUser: 0, owesByUser: 0},
+      {userId: 1, username: 'Ola Kowalska', owesToUser: 120, owesByUser: 0},
+      {userId: 2, username: 'Patryk Nowy', owesToUser: 0, owesByUser: 70},
+      {userId: 3, username: 'Aga Lewandowska', owesToUser: 0, owesByUser: 0},
     ],
   };
 
@@ -106,12 +106,10 @@ const AddDebtScreen = () => {
         data={groupDetails.usersList}
         keyExtractor={(item) => item.userId.toString()}
         renderItem={({item}) => (
-          <UserRow
+          <UsernameRow
             username={item.username}
             userId={item.userId}
             key={item.userId}
-            owesToUser={item.owesToUser}
-            owesByUser={item.owesByUser}
           />
         )}
       />

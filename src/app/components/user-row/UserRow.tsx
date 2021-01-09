@@ -1,9 +1,8 @@
 import React from 'react';
-import {useNavigation} from '@react-navigation/native';
 import {Alert, TouchableOpacity, View} from 'react-native';
 import styled from 'styled-components/native';
 import {theme} from '@styles/theme';
-import {Divider} from '../../shared/divider/Divider';
+import {Divider} from '@shared/divider/Divider';
 
 interface Props {
   userId: number;
@@ -39,8 +38,6 @@ const StyledOwes = styled.Text<{textColor: string}>`
 `;
 
 const UserRow = ({userId, username, owesToUser, owesByUser}: Props) => {
-  const navigation = useNavigation();
-
   const printOwes = () => {
     if (owesToUser > 0 && owesByUser === 0) {
       return (
