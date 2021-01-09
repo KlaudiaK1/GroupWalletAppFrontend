@@ -31,9 +31,17 @@ interface Props {
   placeholder: string;
   isSecure?: boolean;
   iconType?: IconTypes;
+  onChangeText: any;
+  value: any;
 }
 
-const BaseInput = ({placeholder, isSecure = false, iconType}: Props) => {
+const BaseInput = ({
+  placeholder,
+  isSecure = false,
+  iconType,
+  onChangeText,
+  value,
+}: Props) => {
   const [isFocused, setIsFocused] = useState(false);
   const handleFocus = () => {
     setIsFocused(true);
@@ -100,6 +108,8 @@ const BaseInput = ({placeholder, isSecure = false, iconType}: Props) => {
         keyboardAppearance="light"
         onFocus={handleFocus}
         onBlur={handleBlur}
+        value={value}
+        onChangeText={onChangeText}
       />
     </StyledTextInputContainer>
   );

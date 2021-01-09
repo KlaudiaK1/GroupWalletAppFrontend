@@ -17,10 +17,7 @@ const HomeScreen = () => {
     {id: 1, name: 'Mountain Trip'},
     {id: 2, name: 'Baltic Sea Holidays'},
     {id: 3, name: 'Students Group'},
-    {id: 4, name: 'Friday Party'},
-    {id: 5, name: 'StudentsGroup'},
-    {id: 6, name: 'FridayParty'},
-    {id: 7, name: 'StudentsGroup'},
+    {id: 4, name: 'Friday Meeting'},
   ];
 
   return (

@@ -6,10 +6,10 @@ import UserRow from '@components/user-row/UserRow';
 import GroupIcon from '@icons/group.svg';
 import {theme} from '@styles/theme';
 import styled from 'styled-components/native';
-import {Divider} from '../../shared/divider/Divider';
-import BaseButton from '../../shared/based/buttons/base-button/BaseButton';
+import {Divider} from '@shared/divider/Divider';
+import BaseButton from '@shared/based/buttons/base-button/BaseButton';
 import {useNavigation} from '@react-navigation/native';
-import BorderedButton from '../../shared/based/buttons/bordered-button/BorderedButton';
+import BorderedButton from '@shared/based/buttons/bordered-button/BorderedButton';
 type RootStackParamList = {
   Group: {id: string};
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import LoginScreen from './pages/authorization/login/LoginScreen';
-import RegistrationScreen from './pages/authorization/registration/RegistrationScreen';
+import RegisterScreen from './pages/authorization/register/RegisterScreen';
 import HomeScreen from './pages/home/HomeScreen';
 import {theme} from '@styles/theme';
 import CreateGroupScreen from './pages/create-group/CreateGroupScreen';
@@ -25,7 +25,7 @@ const AppRouter = () => {
       />
       <Stack.Screen
         name="Registration"
-        component={RegistrationScreen}
+        component={RegisterScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen

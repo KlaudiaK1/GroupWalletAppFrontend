@@ -1,12 +1,12 @@
 import React from 'react';
+import WavyShape from '@shared/shapes/wavy-shape/WavyShape';
 import BaseInput from '@shared/based/inputs/base-input/BaseInput';
 import BaseButton from '@shared/based/buttons/base-button/BaseButton';
 import {theme} from '@styles/theme';
 import styled from 'styled-components/native';
-import WavyShape from '@shared/shapes/wavy-shape/WavyShape';
 import {useNavigation} from '@react-navigation/native';
 import {Platform} from 'react-native';
-import {useForm, Controller} from 'react-hook-form';
+import {Controller, useForm} from 'react-hook-form';
 import ErrorMessage from '@shared/based/error-message/ErrorMessage';
 
 const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
@@ -15,13 +15,10 @@ const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
 const StyledInputContainer = styled.View`
   align-items: center;
   align-items: center;
-  padding: 8px 8px 0 8px;
+  padding-horizontal: 8px;
 `;
 const StyledButtonContainer = styled.View`
   align-items: center;
-  padding: 8px;
-`;
-const StyledButtonsContainer = styled.View`
   padding: 8px;
 `;
 const StyledImage = styled.Image`
@@ -32,23 +29,23 @@ const StyledImage = styled.Image`
   margin-top: 32px;
 `;
 const Space = styled.View`
-  height: 16px;
+  height: 8px;
 `;
 
-interface LoginForm {
+interface RegisterForm {
   username: string;
   password: string;
 }
-
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-const LoginScreen = () => {
+const RegisterScreen = () => {
   const navigation = useNavigation();
+
   const {errors, handleSubmit, control} = useForm();
 
-  const onSubmit = (data: LoginForm) => {
+  const onSubmit = (data: RegisterForm) => {
     console.log(data);
-    navigation.navigate('Home');
+    navigation.navigate('Login');
   };
 
   return (
@@ -56,6 +53,36 @@ const LoginScreen = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
       <WavyShape />
       <StyledImage source={require('@images/logo_dark.png')} />
+      <StyledInputContainer>
+        <Controller
+          defaultValue=""
+          name="username"
+          rules={{
+            required: {
+              value: true,
+              message: 'Username is required',
+            },
+            minLength: {
+              value: 3,
+              message: 'Username should contains at least 3 characters',
+            },
+          }}
+          control={control}
+          render={({onChange, value}) => (
+            <BaseInput
+              placeholder="Username"
+              iconType="User"
+              onChangeText={(text: string) => onChange(text)}
+              value={value}
+            />
+          )}
+        />
+      </StyledInputContainer>
+      {errors?.username ? (
+        <ErrorMessage>{errors.username.message}</ErrorMessage>
+      ) : (
+        <Space />
+      )}
       <StyledInputContainer>
         <Controller
           defaultValue=""
@@ -114,26 +141,47 @@ const LoginScreen = () => {
       ) : (
         <Space />
       )}
-      <StyledButtonsContainer>
-        <StyledButtonContainer>
-          <BaseButton
-            bg={theme.colors.secondary}
-            color={theme.colors.white}
-            onPress={() => handleSubmit(onSubmit)()}>
-            Log in
-          </BaseButton>
-        </StyledButtonContainer>
-        <StyledButtonContainer>
-          <BaseButton
-            bg={theme.colors.white}
-            color={theme.colors.secondary}
-            onPress={() => navigation.navigate('Registration')}>
-            Sign up
-          </BaseButton>
-        </StyledButtonContainer>
-      </StyledButtonsContainer>
+      <StyledInputContainer>
+        <Controller
+          defaultValue=""
+          name="repeatedPassword"
+          rules={{
+            required: {
+              value: true,
+              message: 'Repeated password is required',
+            },
+            minLength: {
+              value: 6,
+              message: 'Password should contains at least 6 characters',
+            },
+          }}
+          control={control}
+          render={({onChange, value}) => (
+            <BaseInput
+              placeholder="Repeat password"
+              isSecure={true}
+              iconType="Padlock"
+              onChangeText={(text: string) => onChange(text)}
+              value={value}
+            />
+          )}
+        />
+      </StyledInputContainer>
+      {errors?.repeatedPassword ? (
+        <ErrorMessage>{errors.repeatedPassword.message}</ErrorMessage>
+      ) : (
+        <Space />
+      )}
+      <StyledButtonContainer>
+        <BaseButton
+          bg={theme.colors.secondary}
+          color={theme.colors.white}
+          onPress={() => handleSubmit(onSubmit)()}>
+          Create Account
+        </BaseButton>
+      </StyledButtonContainer>
     </StyledKeyboardAvoidingView>
   );
 };
 
-export default LoginScreen;
+export default RegisterScreen;

@@ -23,6 +23,7 @@ module.exports = {
           '@styles': './src/app/styles',
           '@images': './src/app/assets/images',
           '@icons': './src/app/assets/icons',
+          '@shared': './src/app/shared',
         },
       },
     ],

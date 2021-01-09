@@ -27,6 +27,3 @@ export const theme = {
     large: '3em',
   },
 };
-
-//background: rgb(16,13,66);
-// background: linear-gradient(90deg, rgba(16,13,66,1) 0%, rgba(87,155,168,1) 100%);

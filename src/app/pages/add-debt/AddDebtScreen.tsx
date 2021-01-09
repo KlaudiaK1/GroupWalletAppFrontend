@@ -6,8 +6,10 @@ import {theme} from '@styles/theme';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 import {GroupDetails} from '../group-details/GroupDetailsScreen';
-import {Divider} from '../../shared/divider/Divider';
+import {Divider} from '@shared/divider/Divider';
 import UserRow from '@components/user-row/UserRow';
+import {Controller, useForm} from 'react-hook-form';
+import ErrorMessage from '@shared/based/error-message/ErrorMessage';
 
 const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
   flex: 1;
@@ -15,7 +17,7 @@ const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
 `;
 const StyledInputContainer = styled.View`
   align-items: center;
-  padding: 16px;
+  padding: 16px 16px 0 16px;
 `;
 const StyledButtonContainer = styled.View`
   align-items: center;
@@ -25,11 +27,25 @@ const StyledText = styled.Text`
   color: ${theme.colors.primary};
   font-size: 16px;
   font-weight: bold;
-  padding: 8px;
+  padding: 16px 8px 8px 8px;
 `;
+const Space = styled.View`
+  height: 16px;
+`;
+
+interface DebtForm {
+  debt: number;
+}
 
 const AddDebtScreen = () => {
   const navigation = useNavigation();
+
+  const {errors, handleSubmit, control} = useForm();
+
+  const onSubmit = (data: DebtForm) => {
+    console.log(data);
+    navigation.goBack();
+  };
 
   const groupDetails: GroupDetails = {
     id: 1,
@@ -57,8 +73,33 @@ const AddDebtScreen = () => {
     <StyledKeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <StyledInputContainer>
-        <BaseInput placeholder="Amount" iconType={'Money'} />
+        <Controller
+          defaultValue=""
+          name="amount"
+          rules={{
+            required: {value: true, message: 'Amount is required'},
+            validate: (value: number) => {
+              if (value <= 0) {
+                return 'Amount must be greater than 0';
+              }
+            },
+          }}
+          control={control}
+          render={({onChange, value}) => (
+            <BaseInput
+              placeholder="Amount"
+              iconType={'Money'}
+              onChangeText={(text: string) => onChange(text)}
+              value={value}
+            />
+          )}
+        />
       </StyledInputContainer>
+      {errors?.amount ? (
+        <ErrorMessage>{errors.amount.message}</ErrorMessage>
+      ) : (
+        <Space />
+      )}
       <StyledText>Select users, who split the debt</StyledText>
       <Divider />
       <FlatList
@@ -78,7 +119,7 @@ const AddDebtScreen = () => {
         <BaseButton
           bg={theme.colors.secondary}
           color={theme.colors.white}
-          onPress={() => navigation.goBack()}>
+          onPress={() => handleSubmit(onSubmit)()}>
           Add
         </BaseButton>
       </StyledButtonContainer>
