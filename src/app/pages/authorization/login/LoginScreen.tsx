@@ -56,7 +56,7 @@ const LoginScreen = () => {
       })
       .then((response) => {
         storeData('accessToken', response.data.accessToken).then(() =>
-          console.log(response.data.accessToken),
+          console.log('Logged in ' + response.data.accessToken),
         );
       })
       .catch((error) => {

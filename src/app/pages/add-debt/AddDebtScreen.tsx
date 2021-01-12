@@ -10,6 +10,8 @@ import {Divider} from '@shared/divider/Divider';
 import {Controller, useForm} from 'react-hook-form';
 import ErrorMessage from '@shared/error-message/ErrorMessage';
 import UsernameRow from '@components/username-row/UsernameRow';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
   flex: 1;
@@ -42,8 +44,21 @@ const AddDebtScreen = () => {
 
   const {errors, handleSubmit, control} = useForm();
 
-  const onSubmit = (data: DebtForm) => {
-    console.log(data);
+  const onSubmit = async (data: DebtForm) => {
+    let JWTToken = await AsyncStorage.getItem('accessToken');
+    axios
+      .post(
+        'http://10.0.2.2:8080/api/services/controller/debt/add-proportional-group-debt',
+        {
+          name: data.debt,
+        },
+        {
+          headers: {Authorization: `Bearer ${JWTToken}`},
+        },
+      )
+      .catch((error) => {
+        console.log(error);
+      });
     navigation.goBack();
   };
 
@@ -57,18 +72,6 @@ const AddDebtScreen = () => {
     ],
   };
 
-  // let selectedMembers = [];
-  //
-  // const selectItem = (key) => {
-  //   selectedMembers = [...this.selectedMembers];
-  //   for (let item of authUsers) {
-  //     if (item.key == key) {
-  //       item.isSelected = item.isSelected == null ? true : !item.isSelected;
-  //       break;
-  //     }
-  //   }
-  //   this.setState({authUsers});
-  // };
   return (
     <StyledKeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>

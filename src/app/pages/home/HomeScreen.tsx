@@ -8,6 +8,9 @@ import UserIcon from '@icons/user.svg';
 import {Divider} from '@shared/divider/Divider';
 import styled from 'styled-components/native';
 import TurnOffIcon from '@icons/turn-off.svg';
+import axios from 'axios';
+import {removeData} from '../../services/device-storage/DeviceStorage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface Group {
   id: number;
@@ -39,15 +42,18 @@ interface User {
 const HomeScreen = () => {
   const navigation = useNavigation();
 
-  // const JWTToken = getData('accessToken');
-  // const test = axios
-  //   .get('http://10.0.2.2:8080/api/services/controller/group/list', {
-  //     headers: {Authorization: `Bearer ${JWTToken}`},
-  //   })
-  //   .then((response) => {
-  //     console.log('profile is:', response.data);
-  //   })
-  //   .catch((error) => console.log(error));
+  const getGroups = async () => {
+    let JWTToken = await AsyncStorage.getItem('accessToken');
+    axios
+      .get('http://10.0.2.2:8080/api/services/controller/group/list', {
+        headers: {Authorization: `Bearer ${JWTToken}`},
+      })
+      .then((response) => {
+        console.log('profile is:', response.data);
+      })
+      .catch((error) => console.log(JWTToken));
+  };
+
   const groups: Group[] = [
     {id: 1, name: 'Mountain Trip'},
     {id: 2, name: 'Baltic Sea Holidays'},
@@ -59,10 +65,14 @@ const HomeScreen = () => {
     username: 'Monika Nowak',
   };
 
+  const logout = () => {
+    removeData('accessToken').then(() => console.log('Token removed'));
+    navigation.navigate('Login');
+  };
   return (
     <StyledView>
       <StyledSvgButtonContainer>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={logout}>
           <TurnOffIcon width={24} height={24} fill={theme.colors.darkPink} />
         </TouchableOpacity>
       </StyledSvgButtonContainer>

@@ -7,6 +7,8 @@ import {useNavigation} from '@react-navigation/native';
 import {Platform} from 'react-native';
 import {Controller, useForm} from 'react-hook-form';
 import ErrorMessage from '@shared/error-message/ErrorMessage';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
   flex: 1;
@@ -34,8 +36,21 @@ const CreateGroupScreen = () => {
 
   const {errors, handleSubmit, control} = useForm();
 
-  const onSubmit = (data: GroupForm) => {
-    console.log(data);
+  const onSubmit = async (data: GroupForm) => {
+    let JWTToken = await AsyncStorage.getItem('accessToken');
+    axios
+      .post(
+        'http://10.0.2.2:8080/api/services/controller/group/create',
+        {
+          name: data.groupName,
+        },
+        {
+          headers: {Authorization: `Bearer ${JWTToken}`},
+        },
+      )
+      .catch((error) => {
+        console.log(error);
+      });
     navigation.goBack();
   };
 
