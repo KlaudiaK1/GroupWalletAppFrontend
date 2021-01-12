@@ -26,6 +26,7 @@ const StyledTextInput = styled.TextInput`
 `;
 
 type IconTypes = 'User' | 'Padlock' | 'Name' | 'At' | 'Group' | 'Money';
+type KeyboardTypes = 'default' | 'number-pad';
 
 interface Props {
   placeholder: string;
@@ -33,6 +34,7 @@ interface Props {
   iconType?: IconTypes;
   onChangeText: any;
   value: any;
+  keyboardType?: KeyboardTypes;
 }
 
 const BaseInput = ({
@@ -41,6 +43,7 @@ const BaseInput = ({
   iconType,
   onChangeText,
   value,
+  keyboardType = 'default',
 }: Props) => {
   const [isFocused, setIsFocused] = useState(false);
   const handleFocus = () => {
@@ -110,6 +113,7 @@ const BaseInput = ({
         onBlur={handleBlur}
         value={value}
         onChangeText={onChangeText}
+        keyboardType={keyboardType}
       />
     </StyledTextInputContainer>
   );

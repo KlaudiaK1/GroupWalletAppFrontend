@@ -1,13 +1,15 @@
 import React from 'react';
-import BaseInput from '@shared/based/inputs/base-input/BaseInput';
-import BaseButton from '@shared/based/buttons/base-button/BaseButton';
+import BaseInput from '@shared/inputs/base-input/BaseInput';
+import BaseButton from '@shared/buttons/base-button/BaseButton';
 import {theme} from '@styles/theme';
 import styled from 'styled-components/native';
 import WavyShape from '@shared/shapes/wavy-shape/WavyShape';
 import {useNavigation} from '@react-navigation/native';
 import {Platform} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
-import ErrorMessage from '@shared/based/error-message/ErrorMessage';
+import ErrorMessage from '@shared/error-message/ErrorMessage';
+import axios from 'axios';
+import {storeData} from '../../../services/device-storage/DeviceStorage';
 
 const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
   flex: 1;
@@ -36,7 +38,7 @@ const Space = styled.View`
 `;
 
 interface LoginForm {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -47,7 +49,19 @@ const LoginScreen = () => {
   const {errors, handleSubmit, control} = useForm();
 
   const onSubmit = (data: LoginForm) => {
-    console.log(data);
+    axios
+      .post('http://10.0.2.2:8080/api/services/controller/user/login', {
+        email: data.email,
+        password: data.password,
+      })
+      .then((response) => {
+        storeData('accessToken', response.data.accessToken).then(() =>
+          console.log(response.data.accessToken),
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     navigation.navigate('Home');
   };
 

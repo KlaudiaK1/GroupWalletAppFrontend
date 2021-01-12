@@ -1,12 +1,12 @@
 import React from 'react';
-import BaseInput from '@shared/based/inputs/base-input/BaseInput';
+import BaseInput from '@shared/inputs/base-input/BaseInput';
 import styled from 'styled-components/native';
 import {theme} from '@styles/theme';
-import BaseButton from '@shared/based/buttons/base-button/BaseButton';
+import BaseButton from '@shared/buttons/base-button/BaseButton';
 import {useNavigation} from '@react-navigation/native';
 import {Platform} from 'react-native';
 import {Controller, useForm} from 'react-hook-form';
-import ErrorMessage from '@shared/based/error-message/ErrorMessage';
+import ErrorMessage from '@shared/error-message/ErrorMessage';
 
 const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
   flex: 1;

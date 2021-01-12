@@ -3,7 +3,7 @@ import {ScrollView, TouchableOpacity} from 'react-native';
 import GroupRow from '@components/group-row/GroupRow';
 import {theme} from '@styles/theme';
 import {useNavigation} from '@react-navigation/native';
-import AddButton from '../../shared/based/buttons/add-button/AddButton';
+import AddButton from '../../shared/buttons/add-button/AddButton';
 import UserIcon from '@icons/user.svg';
 import {Divider} from '@shared/divider/Divider';
 import styled from 'styled-components/native';
@@ -39,6 +39,15 @@ interface User {
 const HomeScreen = () => {
   const navigation = useNavigation();
 
+  // const JWTToken = getData('accessToken');
+  // const test = axios
+  //   .get('http://10.0.2.2:8080/api/services/controller/group/list', {
+  //     headers: {Authorization: `Bearer ${JWTToken}`},
+  //   })
+  //   .then((response) => {
+  //     console.log('profile is:', response.data);
+  //   })
+  //   .catch((error) => console.log(error));
   const groups: Group[] = [
     {id: 1, name: 'Mountain Trip'},
     {id: 2, name: 'Baltic Sea Holidays'},

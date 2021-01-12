@@ -1,14 +1,14 @@
 import React from 'react';
 import {FlatList, Platform} from 'react-native';
-import BaseInput from '../../shared/based/inputs/base-input/BaseInput';
-import BaseButton from '../../shared/based/buttons/base-button/BaseButton';
+import BaseInput from '../../shared/inputs/base-input/BaseInput';
+import BaseButton from '../../shared/buttons/base-button/BaseButton';
 import {theme} from '@styles/theme';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 import {GroupDetails} from '../group-details/GroupDetailsScreen';
 import {Divider} from '@shared/divider/Divider';
 import {Controller, useForm} from 'react-hook-form';
-import ErrorMessage from '@shared/based/error-message/ErrorMessage';
+import ErrorMessage from '@shared/error-message/ErrorMessage';
 import UsernameRow from '@components/username-row/UsernameRow';
 
 const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
@@ -91,6 +91,7 @@ const AddDebtScreen = () => {
               iconType={'Money'}
               onChangeText={(text: string) => onChange(text)}
               value={value}
+              keyboardType="number-pad"
             />
           )}
         />

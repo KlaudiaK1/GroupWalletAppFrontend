@@ -1,13 +1,14 @@
 import React from 'react';
 import WavyShape from '@shared/shapes/wavy-shape/WavyShape';
-import BaseInput from '@shared/based/inputs/base-input/BaseInput';
-import BaseButton from '@shared/based/buttons/base-button/BaseButton';
+import BaseInput from '@shared/inputs/base-input/BaseInput';
+import BaseButton from '@shared/buttons/base-button/BaseButton';
 import {theme} from '@styles/theme';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 import {Platform} from 'react-native';
 import {Controller, useForm} from 'react-hook-form';
-import ErrorMessage from '@shared/based/error-message/ErrorMessage';
+import ErrorMessage from '@shared/error-message/ErrorMessage';
+import axios from 'axios';
 
 const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
   flex: 1;
@@ -34,7 +35,9 @@ const Space = styled.View`
 
 interface RegisterForm {
   username: string;
+  email: string;
   password: string;
+  passwordConfirmation: string;
 }
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -44,7 +47,16 @@ const RegisterScreen = () => {
   const {errors, handleSubmit, control} = useForm();
 
   const onSubmit = (data: RegisterForm) => {
-    console.log(data);
+    axios
+      .post('http://10.0.2.2:8080/api/services/controller/user/register', {
+        username: data.username,
+        email: data.email,
+        password: data.password,
+        passwordConfirmation: data.passwordConfirmation,
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     navigation.navigate('Login');
   };
 
@@ -144,7 +156,7 @@ const RegisterScreen = () => {
       <StyledInputContainer>
         <Controller
           defaultValue=""
-          name="repeatedPassword"
+          name="passwordConfirmation"
           rules={{
             required: {
               value: true,
@@ -167,8 +179,8 @@ const RegisterScreen = () => {
           )}
         />
       </StyledInputContainer>
-      {errors?.repeatedPassword ? (
-        <ErrorMessage>{errors.repeatedPassword.message}</ErrorMessage>
+      {errors?.passwordConfirmation ? (
+        <ErrorMessage>{errors.passwordConfirmation.message}</ErrorMessage>
       ) : (
         <Space />
       )}
