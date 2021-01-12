@@ -26,7 +26,9 @@ const GroupRow = ({groupName, groupId}: Props) => {
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('GroupDetails', {id: groupId})}>
+      onPress={() =>
+        navigation.navigate('GroupDetails', {id: groupId, groupName: groupName})
+      }>
       <StyledView>
         <StyledText>{groupName}</StyledText>
       </StyledView>

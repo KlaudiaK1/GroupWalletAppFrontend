@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import {Group} from '../home/HomeScreen';
@@ -10,8 +10,10 @@ import {Divider} from '@shared/divider/Divider';
 import BaseButton from '@shared/buttons/base-button/BaseButton';
 import {useNavigation} from '@react-navigation/native';
 import BorderedButton from '@shared/buttons/bordered-button/BorderedButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 type RootStackParamList = {
-  Group: {id: string};
+  Group: {id: string; groupName: string};
 };
 
 type Props = StackScreenProps<RootStackParamList, 'Group'>;
@@ -60,22 +62,30 @@ const StyledDebtButtonContainer = styled.View`
 `;
 const GroupDetailsScreen = ({route}: Props) => {
   const navigation = useNavigation();
+  const [members, setMembers] = useState([
+    {debt: 0, debtor: {username: '', id: 0}},
+  ]);
 
-  const {id} = route.params;
+  const {groupName} = route.params;
 
-  const groupDetails: GroupDetails = {
-    id: 1,
-    name: 'Moutain Trip',
-    usersList: [
-      {userId: 1, username: 'Ola Kowalska', owesToUser: 120, owesByUser: 0},
-      {userId: 2, username: 'Patryk Nowy', owesToUser: 0, owesByUser: 70},
-      {userId: 3, username: 'Aga Lewandowska', owesToUser: 0, owesByUser: 0},
-    ],
-  };
+  useEffect(() => {
+    async function getDataFromAPI() {
+      let JWTToken = await AsyncStorage.getItem('accessToken');
+      axios
+        .get('http://10.0.2.2:8080/api/services/controller/debt/list-debtors', {
+          headers: {Authorization: `Bearer ${JWTToken}`},
+        })
+        .then((response) => {
+          setMembers(response.data);
+        })
+        .catch((error) => console.log(error));
+    }
+    getDataFromAPI();
+  }, [members]);
 
   const printBalance = () => {
-    const userBalance = groupDetails.usersList
-      .map((item) => item.owesToUser - item.owesByUser)
+    const userBalance = members
+      .map((item) => item.debt)
       .reduce((prev, curr) => prev + curr, 0);
     let color: string;
     if (userBalance < 0) {
@@ -94,7 +104,7 @@ const GroupDetailsScreen = ({route}: Props) => {
     <StyledMainView>
       <StyledView>
         <GroupIcon width={40} height={40} fill={theme.colors.secondary} />
-        <StyledText>{groupDetails.name}</StyledText>
+        <StyledText>{groupName}</StyledText>
       </StyledView>
       <StyledBalanceContainer>
         <StyledBalanceText textColor={theme.colors.gray}>
@@ -109,13 +119,13 @@ const GroupDetailsScreen = ({route}: Props) => {
       </StyledDebtButtonContainer>
       <Divider />
       <ScrollView>
-        {groupDetails.usersList.map((user) => (
+        {members.map((item) => (
           <UserRow
-            username={user.username}
-            userId={user.userId}
-            key={user.userId}
-            owesToUser={user.owesToUser}
-            owesByUser={user.owesByUser}
+            username={item.debtor.username}
+            userId={item.debtor.id}
+            key={item.debtor.id}
+            owesToUser={item.debt}
+            owesByUser={item.debt}
           />
         ))}
       </ScrollView>

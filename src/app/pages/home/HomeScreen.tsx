@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, TouchableOpacity} from 'react-native';
 import GroupRow from '@components/group-row/GroupRow';
 import {theme} from '@styles/theme';
@@ -34,36 +34,34 @@ const StyledSvgButtonContainer = styled.View`
   align-items: flex-end;
   padding: 16px 16px 0 16px;
 `;
-interface User {
-  userId: number;
-  username: string;
-}
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const [user, setUser] = useState({username: ''});
+  const [groups, setGroups] = useState([{id: 0, name: ''}]);
 
-  const getGroups = async () => {
-    let JWTToken = await AsyncStorage.getItem('accessToken');
-    axios
-      .get('http://10.0.2.2:8080/api/services/controller/group/list', {
-        headers: {Authorization: `Bearer ${JWTToken}`},
-      })
-      .then((response) => {
-        console.log('profile is:', response.data);
-      })
-      .catch((error) => console.log(JWTToken));
-  };
-
-  const groups: Group[] = [
-    {id: 1, name: 'Mountain Trip'},
-    {id: 2, name: 'Baltic Sea Holidays'},
-    {id: 3, name: 'Students Group'},
-    {id: 4, name: 'Friday Meeting'},
-  ];
-  const user: User = {
-    userId: 1,
-    username: 'Monika Nowak',
-  };
+  useEffect(() => {
+    async function getDataFromAPI() {
+      let JWTToken = await AsyncStorage.getItem('accessToken');
+      axios
+        .get('http://10.0.2.2:8080/api/services/controller/user/me', {
+          headers: {Authorization: `Bearer ${JWTToken}`},
+        })
+        .then((response) => {
+          setUser(response.data);
+        })
+        .catch((error) => console.log(error));
+      axios
+        .get('http://10.0.2.2:8080/api/services/controller/group/list', {
+          headers: {Authorization: `Bearer ${JWTToken}`},
+        })
+        .then((response) => {
+          setGroups(response.data);
+        })
+        .catch((error) => console.log(error));
+    }
+    getDataFromAPI();
+  }, [user, groups]);
 
   const logout = () => {
     removeData('accessToken').then(() => console.log('Token removed'));

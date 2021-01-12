@@ -1,11 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, Platform} from 'react-native';
 import BaseInput from '../../shared/inputs/base-input/BaseInput';
 import BaseButton from '../../shared/buttons/base-button/BaseButton';
 import {theme} from '@styles/theme';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
-import {GroupDetails} from '../group-details/GroupDetailsScreen';
 import {Divider} from '@shared/divider/Divider';
 import {Controller, useForm} from 'react-hook-form';
 import ErrorMessage from '@shared/error-message/ErrorMessage';
@@ -43,6 +42,9 @@ const AddDebtScreen = () => {
   const navigation = useNavigation();
 
   const {errors, handleSubmit, control} = useForm();
+  const [members, setMembers] = useState([
+    {debt: 0, debtor: {username: '', id: 0}},
+  ]);
 
   const onSubmit = async (data: DebtForm) => {
     let JWTToken = await AsyncStorage.getItem('accessToken');
@@ -62,15 +64,20 @@ const AddDebtScreen = () => {
     navigation.goBack();
   };
 
-  const groupDetails: GroupDetails = {
-    id: 1,
-    name: 'Moutain Trip',
-    usersList: [
-      {userId: 1, username: 'Ola Kowalska', owesToUser: 120, owesByUser: 0},
-      {userId: 2, username: 'Patryk Nowy', owesToUser: 0, owesByUser: 70},
-      {userId: 3, username: 'Aga Lewandowska', owesToUser: 0, owesByUser: 0},
-    ],
-  };
+  useEffect(() => {
+    async function getDataFromAPI() {
+      let JWTToken = await AsyncStorage.getItem('accessToken');
+      axios
+        .get('http://10.0.2.2:8080/api/services/controller/debt/list-debtors', {
+          headers: {Authorization: `Bearer ${JWTToken}`},
+        })
+        .then((response) => {
+          setMembers(response.data);
+        })
+        .catch((error) => console.log(error));
+    }
+    getDataFromAPI();
+  }, [members]);
 
   return (
     <StyledKeyboardAvoidingView
@@ -107,13 +114,13 @@ const AddDebtScreen = () => {
       <StyledText>Select users, who split the debt</StyledText>
       <Divider />
       <FlatList
-        data={groupDetails.usersList}
-        keyExtractor={(item) => item.userId.toString()}
+        data={members}
+        keyExtractor={(item) => item.debtor.id.toString()}
         renderItem={({item}) => (
           <UsernameRow
-            username={item.username}
-            userId={item.userId}
-            key={item.userId}
+            username={item.debtor.username}
+            userId={item.debtor.id}
+            key={item.debtor.id}
           />
         )}
       />
