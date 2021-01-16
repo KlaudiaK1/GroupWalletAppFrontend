@@ -124,8 +124,7 @@ const GroupDetailsScreen = ({route}: Props) => {
             username={item.debtor.username}
             userId={item.debtor.id}
             key={item.debtor.id}
-            owesToUser={item.debt}
-            owesByUser={item.debt}
+            owes={item.debt}
           />
         ))}
       </ScrollView>

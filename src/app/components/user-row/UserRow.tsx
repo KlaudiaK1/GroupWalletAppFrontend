@@ -7,8 +7,7 @@ import {Divider} from '@shared/divider/Divider';
 interface Props {
   userId: number;
   username: string;
-  owesToUser: number;
-  owesByUser: number;
+  owes: number;
 }
 
 const StyledView = styled.View`
@@ -37,24 +36,20 @@ const StyledOwes = styled.Text<{textColor: string}>`
   text-align: right;
 `;
 
-const UserRow = ({userId, username, owesToUser, owesByUser}: Props) => {
+const UserRow = ({userId, username, owes}: Props) => {
   const printOwes = () => {
-    if (owesToUser > 0 && owesByUser === 0) {
+    if (owes > 0) {
       return (
         <StyledOwesContainer>
           <StyledOwes textColor={theme.colors.secondary}>owes you</StyledOwes>
-          <StyledOwes textColor={theme.colors.secondary}>
-            ${owesToUser}
-          </StyledOwes>
+          <StyledOwes textColor={theme.colors.secondary}>${owes}</StyledOwes>
         </StyledOwesContainer>
       );
-    } else if (owesToUser === 0 && owesByUser > 0) {
+    } else if (owes < 0) {
       return (
         <StyledOwesContainer>
           <StyledOwes textColor={theme.colors.darkPink}>you owe</StyledOwes>
-          <StyledOwes textColor={theme.colors.darkPink}>
-            ${owesByUser}
-          </StyledOwes>
+          <StyledOwes textColor={theme.colors.darkPink}>${owes}</StyledOwes>
         </StyledOwesContainer>
       );
     } else {
